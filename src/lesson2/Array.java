@@ -24,4 +24,8 @@ public interface Array<E> {
     void sortSelect();
     void sortInsert();
 
+    E[] toArray();
+
+    Array<E> copy();
+
 }

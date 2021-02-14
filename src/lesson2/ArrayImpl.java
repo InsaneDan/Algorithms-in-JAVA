@@ -165,4 +165,18 @@ public class ArrayImpl<E extends Comparable<? super E>> implements Array<E> {
     private int calculateNewLength() {
         return size == 0 ? 1 : size * 2;
     }
+
+    @Override
+    public Array<E> copy() {
+        ArrayImpl<E> array = new ArrayImpl<>(size);
+        array.size = size;
+        array.data = Arrays.copyOf(this.data, size);
+        return array;
+    }
+
+    @Override
+    public E[] toArray() {
+        return data;
+    }
+
 }
