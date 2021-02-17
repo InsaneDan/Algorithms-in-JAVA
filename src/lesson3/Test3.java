@@ -2,8 +2,13 @@ package lesson3;
 
 import lesson3.queue.IQueue;
 import lesson3.queue.PriorityQueueImpl;
+
+import lesson3.queue.QueueImpl;
 import lesson3.stack.IStack;
 import lesson3.stack.StackImpl;
+import lesson4.LinkedQueueImpl;
+import lesson4.LinkedStackImpl;
+
 
 public class Test3 {
 
@@ -13,7 +18,10 @@ public class Test3 {
     }
 
     private static void testStack() {
-        IStack<Integer> stack = new StackImpl<>(5);
+
+//        IStack<Integer> stack = new StackImpl<>(5);
+        IStack<Integer> stack = new LinkedStackImpl<>();
+
 
         System.out.println("Add value 1: " + addToStack(stack, 1));
         System.out.println("Add value 2: " + addToStack(stack, 2));
@@ -41,8 +49,10 @@ public class Test3 {
     }
 
     private static void testQueue() {
-//        IQueue<Integer> queue = new QueueImpl<>(5);
-        IQueue<Integer> queue = new PriorityQueueImpl<>(5);
+
+        IQueue<Integer> queue = new LinkedQueueImpl<>();
+//        IQueue<Integer> queue = new PriorityQueueImpl<>(5);
+
         System.out.println(queue.insert(3));
         System.out.println(queue.insert(5));
         System.out.println(queue.insert(1));
