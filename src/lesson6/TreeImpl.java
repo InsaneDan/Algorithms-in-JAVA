@@ -1,6 +1,5 @@
 package lesson6;
 
-import java.util.function.Consumer;
 import java.util.Stack;
 
 public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
@@ -18,6 +17,10 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
     private int size;
     private Node<E> root;
 
+    // HW: геттер для root
+    public Node<E> getRoot() {
+        return root;
+    }
 
     @Override
     public void add(E value) {
@@ -245,4 +248,25 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
         }
         System.out.println("................................................................");
     }
+
+    // HW: рекурсивная проверка глубины дерева от заданного узла
+    public int depth(Node<E> node) {
+        if (node == null) return 0;
+        if (depth(node.getLeftChild()) > depth(node.getRightChild())) {
+            return depth(node.getLeftChild()) + 1;
+        } else {
+            return depth(node.getRightChild()) + 1;
+        }
+    }
+
+    // HW: рекурсивная проверка сбалансированности
+    public boolean isBalanced(Node<E> node) {
+        if (node == null) return true;
+        if (isBalanced(node.getLeftChild()) && isBalanced(node.getRightChild()) &&
+                Math.abs(depth(node.getLeftChild()) - depth(node.getRightChild())) <= 1) {
+            return true;
+        };
+        return false;
+    }
+
 }
