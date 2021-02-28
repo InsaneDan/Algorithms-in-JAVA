@@ -67,7 +67,7 @@ public class Graph implements IGraph {
     }
 
     @Override
-    public void dfs(String startLabel) {
+    public void dfs(String startLabel) {                                    // Depth First Search
         int startIndex = indexOf(startLabel);
         if (startIndex == -1) {
             throw new IllegalArgumentException("Invalid start label");
@@ -78,7 +78,7 @@ public class Graph implements IGraph {
 
         visitVertex(stack, vertex);
         while (!stack.isEmpty()) {
-            vertex = getNearUnvisitedVertex(stack.peek());
+            vertex = getNearUnvisitedVertex(stack.peek()); // stack.peek() будет брать последний Vertex
             if (vertex != null) {
                 visitVertex(stack, vertex);
             } else {
@@ -90,7 +90,7 @@ public class Graph implements IGraph {
     }
 
     @Override
-    public void bfs(String startLabel) {
+    public void bfs(String startLabel) { // Breadth First Search
         int startIndex = indexOf(startLabel);
         if (startIndex == -1) {
             throw new IllegalArgumentException("Invalid start label");
@@ -101,7 +101,7 @@ public class Graph implements IGraph {
 
         visitVertex(queue, vertex);
         while (!queue.isEmpty()) {
-            vertex = getNearUnvisitedVertex(queue.peek());
+            vertex = getNearUnvisitedVertex(queue.peek()); // queue.peek() будет брать первую вершину Vertex
             if (vertex != null) {
                 visitVertex(queue, vertex);
             } else {
@@ -129,13 +129,55 @@ public class Graph implements IGraph {
     }
 
     private void visitVertex(Stack<Vertex> stack, Vertex vertex) {
-        System.out.println(vertex);
+//        System.out.println(vertex);
         vertex.setVisited(true);
         stack.push(vertex);
     }
     private void visitVertex(Queue<Vertex> queue, Vertex vertex) {
-        System.out.println(vertex);
+//        System.out.println(vertex);
         vertex.setVisited(true);
         queue.add(vertex);
+    }
+
+    // HW: перегруженный метод с сохранением предыдущей вершины
+    private void visitVertex(Queue<Vertex> queue, Vertex vertex, Vertex previousVertex) {
+        visitVertex(queue, vertex);
+        vertex.setPreviousVertex(previousVertex);
+    }
+
+    public List<Vertex> trackShortWay(String startLabel, String endLabel) {
+        int startIndex = indexOf(startLabel);
+        if (startIndex == -1) {
+            throw new IllegalArgumentException("Invalid start label");
+        }
+
+        Queue<Vertex> queue = new LinkedList<>();
+        Vertex vertex = vertexList.get(startIndex);
+
+        // обходим и сохраняем количество шагов от стартовой вершины (текущая - queue.peek())
+        visitVertex(queue, vertex, null);
+        while (!queue.isEmpty()) {
+            vertex = getNearUnvisitedVertex(queue.peek());
+            if (vertex != null) {
+                visitVertex(queue, vertex, queue.peek());
+            } else {
+                queue.remove();
+            }
+        }
+
+        // восстанавливаем путь (в обратном порядке)
+        List<Vertex> track = new ArrayList<>();
+        vertex = vertexList.get(indexOf(endLabel));
+        while (vertex != null) {
+            track.add(vertex);
+            vertex = vertex.getPreviousVertex();
+        }
+
+        // реверс коллекции
+        if (track.size() > 0) {
+            Collections.reverse(track);
+        }
+        resetVertexState(); // очистка значений после обхода
+        return track; // вернуть результат
     }
 }

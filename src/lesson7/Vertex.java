@@ -1,11 +1,13 @@
 package lesson7;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Vertex {
 
     private final String label;
     private boolean isVisited;
+    private Vertex previousVertex; // HW: поле для хранения предыдущей вершины
 
     public Vertex(String label) {
         this.label = label;
@@ -41,5 +43,14 @@ public class Vertex {
         return "Vertex{" +
                 "label='" + label + '\'' +
                 '}';
+    }
+
+    // HW: геттер и сеттер для previousVertex
+    public Vertex getPreviousVertex() {
+        return previousVertex;
+    }
+
+    public void setPreviousVertex(Vertex previousVertex) {
+        this.previousVertex = previousVertex;
     }
 }
