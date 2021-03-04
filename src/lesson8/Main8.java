@@ -4,7 +4,11 @@ public class Main8 {
 
     public static void main(String[] args) {
 //        HashTable<Product, Integer> hashTable = new HashTableImpl<>(5);//5 * 2 = 10
-        HashTable<Product, Integer> hashTable = new DoubleHashTableImpl<>(5);//5 * 2 = 10
+//        HashTable<Product, Integer> hashTable = new DoubleHashTableImpl<>(5);//5 * 2 = 10
+
+        // Lesson 8 homework
+        // для создания коллизий длина массива уменьшена
+        HashTable<Product, Integer> hashTable = new HashTableBucketImpl<>(2);
 
         hashTable.put(new Product(1, "Orange"), 150);
         hashTable.put(new Product(77, "Banana"), 100);
@@ -20,6 +24,7 @@ public class Main8 {
         System.out.println("Cost banana is " + hashTable.get(new Product(77, "Banana")));
         System.out.println("Cost carrot is " + hashTable.get(new Product(77, "Carrot")));
 
+        System.out.println("remove: Potato, Banana");
         hashTable.remove(new Product(21, "Potato"));
         hashTable.remove(new Product(77, "Banana"));
 
